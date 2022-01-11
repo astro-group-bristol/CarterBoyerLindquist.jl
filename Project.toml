@@ -2,3 +2,12 @@ name = "CarterBoyerLindquist"
 uuid = "2b1461c5-fb25-4b94-b31c-0acab88ddff2"
 authors = ["fjebaker <fergusbkr@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+Accessors = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+GeodesicBase = "1f539516-e6d2-4f24-ab09-50f3ac3c4a5a"
+GeodesicTracer = "1f548346-32cf-4117-8ecc-304cf7418187"
+Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
