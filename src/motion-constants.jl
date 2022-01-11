@@ -121,7 +121,7 @@ function LQ(M, r, a, θ, sinΦ, sinΨ)
     L = Υ₁ / Υ₂
     P = (r^2 + a^2 - (a * L))
     Q = (P^2 / Δ₀) - (L - a)^2 - ((Σ₀^2 / A₀) * (cos(asin(sinΨ)) / Υ₂)^2)
-    (L, Q)
+    L, Q
 end
 
 calc_lq(m::CarterMethodBL{T}, pos, vel) where {T} = LQ(

@@ -295,7 +295,7 @@ uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 [[deps.GeodesicBase]]
 git-tree-sha1 = "fa621bafdff531f76dd084f2080189fd3631b7d3"
 repo-rev = "main"
-repo-url = "../GeodesicBase"
+repo-url = "/Users/cosroe/Developer/BlackHoleEcoSystem/GeodesicBase"
 uuid = "1f539516-e6d2-4f24-ab09-50f3ac3c4a5a"
 version = "0.1.0"
 
@@ -303,7 +303,7 @@ version = "0.1.0"
 deps = ["DifferentialEquations", "DocStringExtensions", "GeodesicBase", "JuliaFormatter", "Parameters", "StaticArrays"]
 git-tree-sha1 = "b6048e5ff2e2114cef7443f7214c87d7e46b7162"
 repo-rev = "fergus/refactor"
-repo-url = "../GeodesicTracer.jl"
+repo-url = "/Users/cosroe/Developer/BlackHoleEcoSystem/GeodesicTracer.jl"
 uuid = "1f548346-32cf-4117-8ecc-304cf7418187"
 version = "0.3.0"
 

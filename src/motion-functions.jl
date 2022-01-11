@@ -120,10 +120,10 @@ end
 function carter_velocity(u, E, M, a, p)
     let r = u[2], θ = u[3], L = p.L, Q = p.Q
         Σ₀ = Σ(r, a, θ)
-        (
+        @show (
             Σδt_δλ(E, L, M, r, a, θ) / Σ₀,
-            (1.0 + (-2.0 * p.r)) * Σδr_δλ(E, L, M, Q, r, a) / Σ₀,
-            (1.0 + (-2.0 * p.θ)) * Σδθ_δλ(E, L, Q, a, θ) / Σ₀,
+            p.r * Σδr_δλ(E, L, M, Q, r, a) / Σ₀,
+            p.θ * Σδθ_δλ(E, L, Q, a, θ) / Σ₀,
             Σδϕ_δλ(E, L, M, r, a, θ) / Σ₀
         )
     end

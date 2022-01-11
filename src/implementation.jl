@@ -13,7 +13,7 @@ function integrator_problem(
     pos::StaticVector{S,T}, vel::StaticVector{S,T}, time_domain
     ) where {S,T}
     L, Q = calc_lq(m, pos, vel)
-    ODEProblem{false}(pos, time_domain, (L=L, Q=Q, r=true, θ=vel[2] < 0.0)) do u, p, λ
+    ODEProblem{false}(pos, time_domain, (L=L, Q=Q, r=-1, θ=convert(Int, vel[2])) ) do u, p, λ
         SVector(carter_velocity(u, m.E, m.M, m.a, p)...)
     end
 end
@@ -23,7 +23,7 @@ function integrator_problem(
     pos::AbstractVector{T}, vel::AbstractVector{T}, time_domain
     ) where {T}
     L, Q = calc_lq(m, pos, vel)
-    ODEProblem{true}(pos, time_domain, (L=L, Q=Q, r=true, θ=vel[2] < 0.0)) do du, u, p, λ
+    ODEProblem{true}(pos, time_domain, (L=L, Q=Q, r=-1, θ=convert(Int, vel[2])) ) do du, u, p, λ
         du .= carter_velocity(u, m.E, m.M, m.a, p)
     end
 end
