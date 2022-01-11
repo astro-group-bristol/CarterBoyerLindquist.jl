@@ -124,6 +124,5 @@ function LQ(M, r, a, θ, sinΦ, sinΨ)
     L, Q
 end
 
-calc_lq(m::CarterMethodBL{T}, pos, vel) where {T} = LQ(
-    m.M, pos[2], m.a, pos[3], vel[3], vel[4]
-)
+calc_lq(m::CarterMethodBL{T}, pos, vel) where {T} =
+    LQ(m.M, pos[2], m.a, pos[3], vel[3], vel[4])

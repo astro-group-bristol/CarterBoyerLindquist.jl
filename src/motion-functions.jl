@@ -124,7 +124,7 @@ function carter_velocity(u, E, M, a, p)
             Σδt_δλ(E, L, M, r, a, θ) / Σ₀,
             p.r * Σδr_δλ(E, L, M, Q, r, a) / Σ₀,
             p.θ * Σδθ_δλ(E, L, Q, a, θ) / Σ₀,
-            Σδϕ_δλ(E, L, M, r, a, θ) / Σ₀
+            Σδϕ_δλ(E, L, M, r, a, θ) / Σ₀,
         )
     end
 end

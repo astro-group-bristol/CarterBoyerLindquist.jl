@@ -8,7 +8,13 @@ using DifferentialEquations
 
 import GeodesicBase: AbstractMetricParams, inner_radius
 
-import GeodesicTracer: DiscreteCallback, terminate!, integrator_problem, metric_callback, create_callback_set,  constrain
+import GeodesicTracer:
+    DiscreteCallback,
+    terminate!,
+    integrator_problem,
+    metric_callback,
+    create_callback_set,
+    constrain
 
 include("coordinate-functions.jl")
 include("motion-functions.jl")
