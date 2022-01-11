@@ -31,8 +31,8 @@ end
 function metric_callback(m::CarterMethodBL{T}) where {T}
     (
         DiscreteCallback(ensure_domain(m), terminate!),
-        DiscreteCallback(radial_negative_check(m), flip_radial_sign),
-        DiscreteCallback(angular_negative_check(m), flip_angular_sign)
+        DiscreteCallback(radial_negative_check(m), flip_radial_sign!),
+        DiscreteCallback(angular_negative_check(m), flip_angular_sign!)
     )
 end
 

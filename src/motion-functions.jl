@@ -72,7 +72,7 @@ in [`δ`](@ref).
 """
 @inline function Σδr_δλ(E, L, M, Q, r, a)
     V = Vr(E, L, M, Q, r, a)
-    √(V * sign(V))
+    √abs(V)
 end
 
 
@@ -94,7 +94,7 @@ in [`δ`](@ref).
 """
 @inline function Σδθ_δλ(E, L, Q, a, θ)
     V = Vθ(E, L, Q, a, θ)
-    √(V * sign(V))
+    √abs(V)
 end
 
 
@@ -120,7 +120,7 @@ end
 function carter_velocity(u, E, M, a, p)
     let r = u[2], θ = u[3], L = p.L, Q = p.Q
         Σ₀ = Σ(r, a, θ)
-        @show (
+        (
             Σδt_δλ(E, L, M, r, a, θ) / Σ₀,
             p.r * Σδr_δλ(E, L, M, Q, r, a) / Σ₀,
             p.θ * Σδθ_δλ(E, L, Q, a, θ) / Σ₀,
