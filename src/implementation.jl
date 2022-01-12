@@ -48,5 +48,9 @@ function metric_callback(m::CarterMethodBL{T}) where {T}
     )
 end
 
+function alpha_beta_to_vel(m::CarterMethodBL{T}, u, α, β) where {T}
+    sinΦ, sinΨ = sinΦsinΨ(m.M, u[2], m.a, u[3], α, β)
+    (β < 0.0 ? -1.0 : 1.0, sinΦ, sinΨ)
+end
 
 export CarterMethodBL

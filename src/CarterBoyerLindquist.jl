@@ -14,7 +14,8 @@ import GeodesicTracer:
     integrator_problem,
     metric_callback,
     create_callback_set,
-    constrain
+    constrain,
+    alpha_beta_to_vel
 
 include("coordinate-functions.jl")
 include("motion-functions.jl")
