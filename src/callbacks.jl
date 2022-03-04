@@ -6,11 +6,13 @@ end
 function flip_radial_sign!(integrator)
     p = integrator.p
     integrator.p = @set p.r = -p.r
+    integrator.sol.prob.p.changes[1] = integrator.t[end]
 end
 
 function flip_angular_sign!(integrator)
     p = integrator.p
     integrator.p = @set p.θ = -p.θ
+    integrator.sol.prob.p.changes[2] = integrator.t[end]
 end
 
 function radial_negative_check(m::CarterMethodBL{T}) where {T}
