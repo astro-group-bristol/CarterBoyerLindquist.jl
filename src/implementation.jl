@@ -18,7 +18,7 @@ function integrator_problem(
     ODEProblem{false}(
         pos,
         time_domain,
-        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2])),
+        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2]), changes=T[0.0,0.0]),
     ) do u, p, λ
         SVector(carter_velocity(u, m.E, m.M, m.a, p)...)
     end
@@ -34,7 +34,7 @@ function integrator_problem(
     ODEProblem{true}(
         pos,
         time_domain,
-        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2])),
+        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2]), changes=T[0.0,0.0]),
     ) do du, u, p, λ
         du .= carter_velocity(u, m.E, m.M, m.a, p)
     end
