@@ -17,11 +17,11 @@ constrain(::CarterMethodBL{T}, u, v; μ = 0.0) where {T} = v[1]
 end
 
 function geodesic_point_type(m::CarterMethodBL{T}) where {T}
-    p_type = typeof(make_parameters(T(0), T(0), 1))
+    p_type = typeof(make_parameters(T(0), T(0), 1, T))
     CarterGeodesicPoint{T,p_type}
 end
 
-make_parameters(L, Q, sign_θ) =
+make_parameters(L, Q, sign_θ, T) =
     (L = L, Q = Q, r = -1, θ = convert(Int, sign_θ), changes = T[0.0, 0.0])
 
 function integrator_problem(
@@ -31,7 +31,7 @@ function integrator_problem(
     time_domain,
 ) where {S,T}
     L, Q = calc_lq(m, pos, vel)
-    ODEProblem{false}(pos, time_domain, make_parameters(L, Q, vel[2])) do u, p, λ
+    ODEProblem{false}(pos, time_domain, make_parameters(L, Q, vel[2], T)) do u, p, λ
         SVector(carter_velocity(u, m.E, m.M, m.a, p)...)
     end
 end
@@ -43,7 +43,7 @@ function integrator_problem(
     time_domain,
 ) where {T}
     L, Q = calc_lq(m, pos, vel)
-    ODEProblem{true}(pos, time_domain, make_parameters(L, Q, vel[2])) do du, u, p, λ
+    ODEProblem{true}(pos, time_domain, make_parameters(L, Q, vel[2], T)) do du, u, p, λ
         du .= carter_velocity(u, m.E, m.M, m.a, p)
     end
 end
