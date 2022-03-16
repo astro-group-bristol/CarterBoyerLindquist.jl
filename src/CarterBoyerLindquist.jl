@@ -4,6 +4,8 @@ using Accessors
 using Parameters
 using DocStringExtensions
 using StaticArrays
+
+using SciMLBase
 using DiffEqCallbacks
 
 import GeodesicBase:
