@@ -6,7 +6,7 @@ using DocStringExtensions
 using StaticArrays
 using DifferentialEquations
 
-import GeodesicBase: AbstractMetricParams, inner_radius
+import GeodesicBase: AbstractMetricParams, inner_radius, GeodesicPoint, get_endpoint, unpack_solution, SciMLBase
 
 import GeodesicTracer:
     DiscreteCallback,

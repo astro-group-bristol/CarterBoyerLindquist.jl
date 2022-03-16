@@ -18,7 +18,7 @@ function integrator_problem(
     ODEProblem{false}(
         pos,
         time_domain,
-        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2]), changes=T[0.0,0.0]),
+        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2]), changes = T[0.0, 0.0]),
     ) do u, p, λ
         SVector(carter_velocity(u, m.E, m.M, m.a, p)...)
     end
@@ -34,7 +34,7 @@ function integrator_problem(
     ODEProblem{true}(
         pos,
         time_domain,
-        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2]), changes=T[0.0,0.0]),
+        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2]), changes = T[0.0, 0.0]),
     ) do du, u, p, λ
         du .= carter_velocity(u, m.E, m.M, m.a, p)
     end
@@ -51,6 +51,17 @@ end
 function alpha_beta_to_vel(m::CarterMethodBL{T}, u, α, β) where {T}
     sinΦ, sinΨ = sinΦsinΨ(m.M, u[2], m.a, u[3], α, β)
     (β < 0.0 ? -1.0 : 1.0, sinΦ, sinΨ)
+end
+
+convert_velocity_type(u::StaticVector{S,T}, v) where {S,T} = convert(SVector{S,T}, v)
+convert_velocity_type(u::AbstractVector{T}, v) where {T} = convert(typeof(u), collect(v))
+
+function get_endpoint(m::CarterMethodBL{T}, sol::SciMLBase.AbstractODESolution{T,N,S}) where {T,N,S}
+    us, ts, p = unpack_solution(sol)
+    u = us[end]
+    v = carter_velocity(u, m.E, m.M, m.a, p)
+    t = ts[end]
+    GeodesicPoint(u, convert_velocity_type(u, v), t, p)
 end
 
 export CarterMethodBL
