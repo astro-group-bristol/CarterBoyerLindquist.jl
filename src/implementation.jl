@@ -8,6 +8,22 @@ end
 inner_radius(m::CarterMethodBL{T}) where {T} = m.M + √(m.M^2 - m.a^2)
 constrain(::CarterMethodBL{T}, u, v; μ = 0.0) where {T} = v[1]
 
+@with_kw struct CarterGeodesicPoint{T,P} <: AbstractGeodesicPoint{T}
+    retcode::Symbol
+    t::T
+    u::AbstractVector{T}
+    v::AbstractVector{T}
+    p::P
+end
+
+function geodesic_point_type(m::CarterMethodBL{T}) where {T}
+    p_type = typeof(make_parameters(T(0), T(0), 1))
+    CarterGeodesicPoint{T,p_type}
+end
+
+make_parameters(L, Q, sign_θ) =
+    (L = L, Q = Q, r = -1, θ = convert(Int, sign_θ), changes = T[0.0, 0.0])
+
 function integrator_problem(
     m::CarterMethodBL{T},
     pos::StaticVector{S,T},
@@ -15,11 +31,7 @@ function integrator_problem(
     time_domain,
 ) where {S,T}
     L, Q = calc_lq(m, pos, vel)
-    ODEProblem{false}(
-        pos,
-        time_domain,
-        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2]), changes = T[0.0, 0.0]),
-    ) do u, p, λ
+    ODEProblem{false}(pos, time_domain, make_parameters(L, Q, vel[2])) do u, p, λ
         SVector(carter_velocity(u, m.E, m.M, m.a, p)...)
     end
 end
@@ -31,11 +43,7 @@ function integrator_problem(
     time_domain,
 ) where {T}
     L, Q = calc_lq(m, pos, vel)
-    ODEProblem{true}(
-        pos,
-        time_domain,
-        (L = L, Q = Q, r = -1, θ = convert(Int, vel[2]), changes = T[0.0, 0.0]),
-    ) do du, u, p, λ
+    ODEProblem{true}(pos, time_domain, make_parameters(L, Q, vel[2])) do du, u, p, λ
         du .= carter_velocity(u, m.E, m.M, m.a, p)
     end
 end
@@ -56,12 +64,15 @@ end
 convert_velocity_type(u::StaticVector{S,T}, v) where {S,T} = convert(SVector{S,T}, v)
 convert_velocity_type(u::AbstractVector{T}, v) where {T} = convert(typeof(u), collect(v))
 
-function get_endpoint(m::CarterMethodBL{T}, sol::SciMLBase.AbstractODESolution{T,N,S}) where {T,N,S}
+function get_endpoint(
+    m::CarterMethodBL{T},
+    sol::SciMLBase.AbstractODESolution{T,N,S},
+) where {T,N,S}
     us, ts, p = unpack_solution(sol)
     u = us[end]
     v = carter_velocity(u, m.E, m.M, m.a, p)
     t = ts[end]
-    GeodesicPoint(u, convert_velocity_type(u, v), t, p)
+    CarterGeodesicPoint(sol.retcode, t, u, convert_velocity_type(u, v), p)
 end
 
-export CarterMethodBL
+export CarterMethodBL, CarterGeodesicPoint
