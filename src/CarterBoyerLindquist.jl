@@ -4,7 +4,7 @@ using Accessors
 using Parameters
 using DocStringExtensions
 using StaticArrays
-using DifferentialEquations
+using DiffEqCallbacks
 
 import GeodesicBase:
     AbstractMetricParams,
