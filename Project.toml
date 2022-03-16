@@ -1,11 +1,11 @@
 name = "CarterBoyerLindquist"
 uuid = "2b1461c5-fb25-4b94-b31c-0acab88ddff2"
 authors = ["fjebaker <fergusbkr@gmail.com>"]
-version = "0.1.4"
+version = "0.1.5"
 
 [deps]
 Accessors = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
-DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+DiffEqCallbacks = "459566f4-90b8-5000-8ac3-15dfb0a30def"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 GeodesicBase = "1f539516-e6d2-4f24-ab09-50f3ac3c4a5a"
 GeodesicTracer = "1f548346-32cf-4117-8ecc-304cf7418187"
