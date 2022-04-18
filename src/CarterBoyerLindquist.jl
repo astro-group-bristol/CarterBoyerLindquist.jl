@@ -26,6 +26,8 @@ import GeodesicTracer:
     constrain,
     alpha_beta_to_vel
 
+abstract type AbstractFirstOrderMetricParams{T} <: AbstractMetricParams{T} end
+
 include("carter-method-bl-impl.jl")
 include("carter-method-bl-interface.jl")
 include("implementation.jl")

@@ -1,6 +1,6 @@
 
 
-@with_kw struct CarterGeodesicPoint{T,P} <: AbstractGeodesicPoint{T}
+@with_kw struct FirstOrderGeodesicPoint{T,P} <: AbstractGeodesicPoint{T}
     retcode::Symbol
     t::T
     u::AbstractVector{T}
@@ -10,7 +10,7 @@ end
 
 function geodesic_point_type(m::CarterMethodBL{T}) where {T}
     p_type = typeof(make_parameters(T(0), T(0), 1, T))
-    CarterGeodesicPoint{T,p_type}
+    FirstOrderGeodesicPoint{T,p_type}
 end
 
 make_parameters(L, Q, sign_θ, T) =
@@ -25,10 +25,6 @@ function metric_callback(m::CarterMethodBL{T}) where {T}
     )
 end
 
-function alpha_beta_to_vel(m::CarterMethodBL{T}, u, α, β) where {T}
-    sinΦ, sinΨ = sinΦsinΨ(m.M, u[2], m.a, u[3], α, β)
-    (β < 0.0 ? -1.0 : 1.0, sinΦ, sinΨ)
-end
 
 convert_velocity_type(u::StaticVector{S,T}, v) where {S,T} = convert(SVector{S,T}, v)
 convert_velocity_type(u::AbstractVector{T}, v) where {T} = convert(typeof(u), collect(v))
@@ -41,7 +37,7 @@ function get_endpoint(
     u = us[end]
     v = carter_velocity(u, m.E, m.M, m.a, p)
     t = ts[end]
-    CarterGeodesicPoint(sol.retcode, t, u, convert_velocity_type(u, v), p)
+    FirstOrderGeodesicPoint(sol.retcode, t, u, convert_velocity_type(u, v), p)
 end
 
-export CarterGeodesicPoint
+export FirstOrderGeodesicPoint

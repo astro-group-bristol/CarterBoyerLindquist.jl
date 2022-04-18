@@ -1,3 +1,8 @@
+module CarterMethodBLCoords
+
+using ..CarterBoyerLindquist
+using DocStringExtensions
+
 """
     $(TYPEDSIGNATURES)
 
@@ -307,3 +312,5 @@ Z_2 = \\sqrt{\\frac{3a^2}{M^2} + Z_1^2}.
 ```
 """
 Z₂(M, a) = √(3(a / M)^2 + Z₁(M, a)^2)
+
+end # module 

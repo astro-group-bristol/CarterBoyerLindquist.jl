@@ -1,25 +1,25 @@
-function carter_velocity(u, E, M, a, p)
-    let r = u[2], θ = u[3], L = p.L, Q = p.Q
-        Σ₀ = Σ(r, a, θ)
-        (
-            Σδt_δλ(E, L, M, r, a, θ) / Σ₀,
-            p.r * Σδr_δλ(E, L, M, Q, r, a) / Σ₀,
-            p.θ * Σδθ_δλ(E, L, Q, a, θ) / Σ₀,
-            Σδϕ_δλ(E, L, M, r, a, θ) / Σ₀,
-        )
-    end
-end
-
-calc_lq(m::CarterMethodBL{T}, pos, vel) where {T} =
-    LQ(m.M, pos[2], m.a, pos[3], vel[3], vel[4])
-
-
-@with_kw struct CarterMethodBL{T} <: AbstractMetricParams{T}
+@with_kw struct CarterMethodBL{T} <: AbstractFirstOrderMetricParams{T}
     @deftype T
     M = 1.0
     a = 0.0
     E = 1.0
 end
+
+function carter_velocity(u, E, M, a, p)
+    let r = u[2], θ = u[3], L = p.L, Q = p.Q
+        Σ₀ = CarterMethodBLCoords.Σ(r, a, θ)
+        (
+            CarterMethodBLCoords.Σδt_δλ(E, L, M, r, a, θ) / Σ₀,
+            p.r * CarterMethodBLCoords.Σδr_δλ(E, L, M, Q, r, a) / Σ₀,
+            p.θ * CarterMethodBLCoords.Σδθ_δλ(E, L, Q, a, θ) / Σ₀,
+            CarterMethodBLCoords.Σδϕ_δλ(E, L, M, r, a, θ) / Σ₀,
+        )
+    end
+end
+
+calc_lq(m::CarterMethodBL{T}, pos, vel) where {T} =
+    CarterMethodBLCoords.LQ(m.M, pos[2], m.a, pos[3], vel[3], vel[4])
+
 
 inner_radius(m::CarterMethodBL{T}) where {T} = m.M + √(m.M^2 - m.a^2)
 constrain(::CarterMethodBL{T}, u, v; μ = 0.0) where {T} = v[1]
@@ -47,6 +47,11 @@ function integrator_problem(
     ODEProblem{true}(pos, time_domain, make_parameters(L, Q, vel[2], T)) do du, u, p, λ
         du .= carter_velocity(u, m.E, m.M, m.a, p)
     end
+end
+
+function alpha_beta_to_vel(m::CarterMethodBL{T}, u, α, β) where {T}
+    sinΦ, sinΨ = CarterMethodBLCoords.sinΦsinΨ(m.M, u[2], m.a, u[3], α, β)
+    (β < 0.0 ? -1.0 : 1.0, sinΦ, sinΨ)
 end
 
 export CarterMethodBL
