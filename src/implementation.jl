@@ -40,4 +40,8 @@ function get_endpoint(
     FirstOrderGeodesicPoint(sol.retcode, t, u, convert_velocity_type(u, v), p)
 end
 
+Vr(m::AbstractFirstOrderMetricParams{T}, u, p) where {T} = error("Not implmented for $(typeof(m)).")
+Vθ(m::AbstractFirstOrderMetricParams{T}, u, p) where {T} = error("Not implmented for $(typeof(m)).")
+
+
 export FirstOrderGeodesicPoint

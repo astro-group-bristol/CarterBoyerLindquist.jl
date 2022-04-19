@@ -54,4 +54,15 @@ function alpha_beta_to_vel(m::CarterMethodBL{T}, u, α, β) where {T}
     (β < 0.0 ? -1.0 : 1.0, sinΦ, sinΨ)
 end
 
+
+function Vr(m::CarterMethodBL{T}, u, p) where {T}
+    L, Q, _, _ = p
+    CarterMethodBLCoords.Vr(m.E, L, m.M, Q, u[2], m.a) 
+end
+function Vθ(m::CarterMethodBL{T}, u, p) where {T}
+    L, Q, _, _ = p
+    CarterMethodBLCoords.Vθ(m.E, L, Q, m.a, u[3])
+end
+
+
 export CarterMethodBL
