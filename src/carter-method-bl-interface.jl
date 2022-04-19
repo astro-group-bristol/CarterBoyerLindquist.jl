@@ -57,7 +57,7 @@ end
 
 function Vr(m::CarterMethodBL{T}, u, p) where {T}
     L, Q, _, _ = p
-    CarterMethodBLCoords.Vr(m.E, L, m.M, Q, u[2], m.a) 
+    CarterMethodBLCoords.Vr(m.E, L, m.M, Q, u[2], m.a)
 end
 function Vθ(m::CarterMethodBL{T}, u, p) where {T}
     L, Q, _, _ = p
